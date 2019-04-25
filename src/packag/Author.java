@@ -6,6 +6,7 @@
 package packag;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import static javax.persistence.CascadeType.PERSIST;
@@ -29,12 +30,22 @@ public class Author implements Serializable {
     private Long id;
     private String name;
     private String country;
-    @ManyToMany(cascade=PERSIST)
-    private Set<Book> books;
+    @ManyToMany(cascade=PERSIST,mappedBy="authors")
+    private List<Book> books;
 
     public String getName() {
         return name;
     }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+    
+    
 
     public void setName(String name) {
         this.name = name;
@@ -48,13 +59,7 @@ public class Author implements Serializable {
         this.country = country;
     }
 
-    public Set<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
+ 
     
     
 

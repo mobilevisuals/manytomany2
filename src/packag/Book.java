@@ -6,6 +6,7 @@
 package packag;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import static javax.persistence.CascadeType.PERSIST;
@@ -13,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -30,7 +33,11 @@ public class Book implements Serializable {
     private int pages;
     private String title;
     @ManyToMany(cascade=PERSIST)
-    private Set<Author> authors;
+    @JoinTable(name = "author_booksmap",
+        joinColumns = @JoinColumn(name = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors;
 
     public int getPages() {
         return pages;
@@ -48,13 +55,15 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    public Set<Author> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(Set<Author> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
+
+   
     
     
 

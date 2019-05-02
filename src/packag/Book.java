@@ -24,7 +24,7 @@ import javax.persistence.ManyToMany;
  */
 @Entity
 public class Book implements Serializable {
-
+//tabellen som äger
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional=false)
@@ -32,10 +32,16 @@ public class Book implements Serializable {
     private Long id;
     private int pages;
     private String title;
+    //Cascade är för att det som Book refererar till också kan sparas med persist
+    //alltså det räcker med att vi anropar persist på Book och vi behöver inte anropa persist på
+    //alla Authors som den innehåller
     @ManyToMany(cascade=PERSIST)
+    //JoinTable krävs här, som kopplar samman kolumnerna för primärnycklarna
+    //ska vara på ägande klassen
     @JoinTable(name = "author_booksmap",
         joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "author_id")
+            //inverse: tabellen på andra sidan
     )
     private List<Author> authors;
 

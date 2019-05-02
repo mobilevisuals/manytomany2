@@ -21,6 +21,7 @@ import javax.persistence.ManyToMany;
  * @author eyvind
  */
 @Entity
+
 public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +31,9 @@ public class Author implements Serializable {
     private Long id;
     private String name;
     private String country;
+    //mappedBy pekar på den som äger, alltså books-listan. Book är då den ägande klassen.
     @ManyToMany(cascade=PERSIST,mappedBy="authors")
+    //authors: List för tabellen på andra sidan många-till-många förhållandet
     private List<Book> books;
 
     public String getName() {
